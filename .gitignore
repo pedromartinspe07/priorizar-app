@@ -1,0 +1,76 @@
+# .gitignore aprimorado para projetos React Native e Expo
+
+# Sistema Operacional
+.DS_Store
+
+---
+
+# Ambiente de desenvolvimento e ferramentas
+#
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+ios/.xcode.env.local
+
+# Android / IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+.cxx/
+
+# Node
+#
+node_modules/
+npm-debug.log
+yarn-error.log
+.yarn/
+.npm/
+
+# BUCK
+buck-out/
+\.buckd/
+*.keystore
+!debug.keystore
+
+# fastlane
+#
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Artefatos do bundle
+*.jsbundle
+
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
+
+---
+
+# Expo
+#
+.expo/
+web-build/
+.expo-shared/
+.env
+.env.*

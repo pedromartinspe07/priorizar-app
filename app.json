@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Priorizar",
+    "slug": "priorizar-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/app-icon.png",  
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash-screen.png", 
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pedromartinspe07.priorizarapp" 
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png", 
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.pedromartinspe07.priorizarapp" 
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "priorizar-app",
+    "extra": {
+      "eas": {
+        "projectId": "seu-projeto-id-do-eas"
+      }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
+  }
+}
