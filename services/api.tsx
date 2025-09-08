@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'http://seu-ip-do-backend:5000/api';
+const API_BASE_URL = 'http://priorizar-backend-production.up.railway.app/api';
 
 // Cria uma única instância do Axios para ser usada em todo o app.
 // Isso centraliza a configuração e os interceptors.
