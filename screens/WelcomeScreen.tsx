@@ -16,7 +16,7 @@ export function WelcomeScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Image 
-          source={require('../../assets/images/priorizar-logo.png')} 
+          source={require('../assets/images/priorizar-logo.png')} 
           style={styles.logo}
         />
         <Text style={styles.title}>Bem-vindo ao Priorizar</Text>

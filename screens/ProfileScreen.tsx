@@ -14,7 +14,7 @@ export function ProfileScreen() {
       <Header title="Perfil" />
       <View style={styles.profileContainer}>
         <Image 
-          source={require('../../assets/images/profile-placeholder.png')} 
+          source={require('../assets/images/profile-placeholder.png')} 
           style={styles.avatar}
         />
         <Text style={styles.name}>{user?.name || 'Usuário Priorizar'}</Text>
