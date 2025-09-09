@@ -4,7 +4,6 @@ import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
-// Importe as novas constantes Frutiger
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
 
@@ -43,7 +42,7 @@ export function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: FrutigerColors.background, // Cor de fundo suave
+    backgroundColor: FrutigerColors.background,
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: FrutigerLayout.spacing.xl,
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
     color: FrutigerColors.text,
-    textShadowColor: 'rgba(255,255,255,0.8)', // Brilho no texto
+    textShadowColor: 'rgba(255,255,255,0.8)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
     textAlign: 'center',
@@ -72,15 +71,14 @@ const styles = StyleSheet.create({
     color: FrutigerColors.textLight,
     textAlign: 'center',
     marginTop: FrutigerLayout.spacing.sm,
-    textShadowColor: 'rgba(255,255,255,0.5)', // Brilho no texto
-    textShadowOffset: { width: 0, height: 0.5 },
-    textShadowRadius: 1,
   },
   buttonContainer: {
     width: '100%',
-    paddingHorizontal: FrutigerLayout.spacing.md,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   spacer: {
-    height: FrutigerLayout.spacing.sm,
+    height: FrutigerLayout.spacing.md,
   },
 });

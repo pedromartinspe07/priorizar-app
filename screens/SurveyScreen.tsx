@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextInput, Alert, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
-import api from '../services/api';
-// Importe as novas constantes Frutiger
+// import api from '../services/api'; // Mockado
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
 
@@ -23,20 +22,17 @@ export function SurveyScreen() {
     Keyboard.dismiss();
 
     try {
-      await api.post('/survey', {
-        daily_hours: parseFloat(dailyHours),
-        psychological_issues: psychologicalIssues,
-        family_issues: familyIssues,
-      });
+      // Simula a requisição da API
+      await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 segundos de delay
 
-      Alert.alert('Sucesso', 'Seus dados foram enviados para análise!');
+      Alert.alert('Sucesso', 'Seus dados foram enviados para análise (mockado)!');
       // Resetar o formulário
       setDailyHours('');
       setPsychologicalIssues('');
       setFamilyIssues('');
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao enviar seu questionário. Tente novamente.');
-      console.error("Erro ao enviar questionário:", error);
+      console.error("Erro mockado:", error);
     } finally {
       setLoading(false);
     }
@@ -44,42 +40,42 @@ export function SurveyScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Questionário" />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <Header title="Questionário de Bem-Estar" />
+      <ScrollView style={styles.scrollContent}>
+        <Text style={styles.introText}>
+          Responda a algumas perguntas simples para nos ajudar a entender melhor seus hábitos de sono e bem-estar.
+        </Text>
+
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
-            <Text style={styles.introText}>
-              Responda a este breve questionário para nos ajudar a entender melhor seus hábitos de uso.
-            </Text>
-    
             <View style={styles.questionContainer}>
-              <Text style={styles.question}>1. Quantas horas por dia você utiliza o aparelho eletrônico?</Text>
+              <Text style={styles.question}>Quantas horas você dorme por noite?</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Ex: 5"
+                placeholder="Ex: 7"
                 placeholderTextColor="#A9A9A9"
+                keyboardType="numeric"
                 value={dailyHours}
                 onChangeText={setDailyHours}
-                keyboardType="numeric"
-                />
+              />
+            </View>
+
+            <View style={styles.questionContainer}>
+              <Text style={styles.question}>Você tem lidado com problemas psicológicos?</Text>
               <TextInput
-                style={styles.textarea}
-                multiline
-                numberOfLines={4}
-                placeholder="Ex: ansiedade, estresse, irritabilidade..."
+                style={styles.input}
+                placeholder="Ex: Sim, Não"
                 placeholderTextColor="#A9A9A9"
                 value={psychologicalIssues}
                 onChangeText={setPsychologicalIssues}
               />
             </View>
-            
+
             <View style={styles.questionContainer}>
-              <Text style={styles.question}>3. Quais problemas familiares você obteve ao longo do tempo de uso?</Text>
+              <Text style={styles.question}>Você tem lidado com problemas familiares?</Text>
               <TextInput
-                style={styles.textarea}
-                multiline
-                numberOfLines={4}
-                placeholder="Ex: discussões, falta de comunicação, afastamento..."
+                style={styles.input}
+                placeholder="Ex: Sim, Não"
                 placeholderTextColor="#A9A9A9"
                 value={familyIssues}
                 onChangeText={setFamilyIssues}
@@ -87,10 +83,12 @@ export function SurveyScreen() {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <Button 
-          title={loading ? "" : "Enviar Respostas"} 
-          onPress={handleSubmit} 
+
+        <Button
+          title={loading ? "" : "Enviar Respostas"}
+          onPress={handleSubmit}
           disabled={loading}
+          style={{ marginTop: 20 }}
         >
           {loading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
         </Button>
@@ -132,17 +130,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.8)',
     fontSize: FrutigerLayout.fontSize.md,
-    color: FrutigerColors.text,
-  },
-  textarea: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    padding: FrutigerLayout.spacing.md,
-    borderRadius: FrutigerLayout.borderRadius,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.8)',
-    fontSize: FrutigerLayout.fontSize.md,
-    height: 100,
-    textAlignVertical: 'top',
     color: FrutigerColors.text,
   },
 });

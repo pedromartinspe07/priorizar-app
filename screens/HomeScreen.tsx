@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } f
 import { Header } from '../components/Header';
 import { PositiveMessageCard } from '../components/PositiveMessageCard';
 import { useAuthentication } from '../hooks/useAuthentication';
-import api from '../services/api';
-// Importe as novas constantes Frutiger
+// import api from '../services/api'; // Mockado
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
 
@@ -15,11 +14,10 @@ export function HomeScreen() {
   const [goalStats, setGoalStats] = useState({ completed: 0, total: 0 });
 
   useEffect(() => {
-    // Busca a mensagem positiva da API
+    // Mock da busca da mensagem positiva da API
     const fetchPositiveMessage = async () => {
       try {
-        const response = await api.get('/ia/message');
-        setPositiveMessage(response.data.message);
+        setPositiveMessage("A vida é como andar de bicicleta. Para ter equilíbrio, você tem que se manter em movimento.");
       } catch (error) {
         console.error("Falha ao buscar mensagem de IA:", error);
         setPositiveMessage("A vida é como andar de bicicleta. Para ter equilíbrio, você tem que se manter em movimento.");
@@ -28,34 +26,43 @@ export function HomeScreen() {
       }
     };
 
-    // Busca o progresso das metas do usuário
+    // Mock da busca do progresso das metas do usuário
     const fetchGoalStats = async () => {
       try {
-        const response = await api.get('/goals');
-        const completedGoals = response.data.filter((goal: any) => goal.completed).length;
-        setGoalStats({ completed: completedGoals, total: response.data.length });
+        setGoalStats({ completed: 2, total: 4 });
       } catch (error) {
-        console.error("Falha ao buscar metas:", error);
+        console.error("Falha ao buscar estatísticas de metas:", error);
       }
     };
 
-    fetchPositiveMessage();
-    fetchGoalStats();
+    // Simula o delay da requisição
+    setTimeout(() => {
+      fetchPositiveMessage();
+      fetchGoalStats();
+    }, 1500); // 1.5 segundos de delay para simular a requisição
+
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Início" />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.greeting}>Olá, {user?.name || 'usuário'} 👋</Text>
+      <Header title="Priorizar" />
+      <ScrollView style={styles.scrollContent}>
         {loadingMessage ? (
-          <ActivityIndicator size="large" color={FrutigerColors.primary} style={styles.loadingMessage} />
+          <View style={styles.loadingMessage}>
+            <ActivityIndicator size="small" color={FrutigerColors.glassBase} />
+            <Text style={{ textAlign: 'center', color: FrutigerColors.textLight, marginTop: 5 }}>Gerando mensagem...</Text>
+          </View>
         ) : (
           <PositiveMessageCard message={positiveMessage} />
         )}
+
+        <Text style={styles.greeting}>
+          Olá, {(user && typeof user === 'object' && user !== null && 'email' in user && typeof user.email === 'string') ? user.email : 'Usuário'}!
+        </Text>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Progresso de Metas</Text>
-          <Text style={styles.dataText}>{goalStats.completed} de {goalStats.total}</Text>
+          <Text style={styles.dataText}>{goalStats.completed}/{goalStats.total}</Text>
           <Text style={styles.subtext}>Metas concluídas no dia.</Text>
         </View>
         <View style={styles.section}>
@@ -97,12 +104,12 @@ const styles = StyleSheet.create({
     fontSize: FrutigerLayout.fontSize.md,
     fontWeight: 'bold',
     color: FrutigerColors.text,
-    marginBottom: FrutigerLayout.spacing.sm,
   },
   dataText: {
     fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    color: FrutigerColors.primary,
+    color: FrutigerColors.text,
+    marginVertical: FrutigerLayout.spacing.sm,
   },
   subtext: {
     fontSize: FrutigerLayout.fontSize.sm,

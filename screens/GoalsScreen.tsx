@@ -3,10 +3,47 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList, TextInput, Alert, Activ
 import { Header } from '../components/Header';
 import { GoalItem } from '../components/GoalItem';
 import { Button } from '../components/Button';
-import { useGoals } from '../hooks/useGoals';
-// Importe as novas constantes
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
+
+// Mock do hook useGoals
+const useGoals = () => {
+  const [goals, setGoals] = useState([
+    { id: '1', title: 'Meditar por 10 minutos', completed: true },
+    { id: '2', title: 'Ler 30 páginas de um livro', completed: false },
+    { id: '3', title: 'Praticar exercício físico', completed: false },
+    { id: '4', title: 'Organizar o quarto', completed: true },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const addGoal = async (title: string) => {
+    setIsLoading(true);
+    // Simula a requisição da API
+    setTimeout(() => {
+      const newGoal = { id: Math.random().toString(), title, completed: false };
+      setGoals(prevGoals => [newGoal, ...prevGoals]);
+      setIsLoading(false);
+      Alert.alert('Sucesso', 'Meta adicionada com sucesso (mockada)!');
+    }, 1000);
+  };
+
+  const toggleGoalComplete = async (goalId: string) => {
+    setIsLoading(true);
+    // Simula a requisição da API
+    setTimeout(() => {
+      setGoals(prevGoals =>
+        prevGoals.map(goal =>
+          goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
+        )
+      );
+      setIsLoading(false);
+      Alert.alert('Sucesso', 'Meta atualizada (mockada)!');
+    }, 500);
+  };
+
+  return { goals, isLoading, error, addGoal, toggleGoalComplete };
+};
 
 export function GoalsScreen() {
   const [newGoalTitle, setNewGoalTitle] = useState('');
@@ -26,7 +63,7 @@ export function GoalsScreen() {
     <SafeAreaView style={styles.container}>
       <Header title="Minhas Metas" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView 
+        <KeyboardAvoidingView
           style={styles.keyboardView}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
@@ -38,38 +75,36 @@ export function GoalsScreen() {
               value={newGoalTitle}
               onChangeText={setNewGoalTitle}
             />
-            <Button title="Adicionar" onPress={handleAddGoal} />
+            <Button
+              title={isLoading ? "" : "+"}
+              onPress={handleAddGoal}
+              disabled={isLoading}
+              style={{ paddingVertical: 10, paddingHorizontal: 15 }}
+            >
+              {isLoading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
+            </Button>
           </View>
+
           {isLoading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={FrutigerColors.primary} />
+              <ActivityIndicator size="large" color={FrutigerColors.glassBase} />
               <Text style={styles.loadingText}>Carregando metas...</Text>
-            </View>
-          ) : error ? (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{error}</Text>
-            </View>
-          ) : goals.length === 0 ? (
-            <View style={styles.noGoalsContainer}>
-              <Text style={styles.noGoalsText}>Nenhuma meta adicionada ainda!</Text>
             </View>
           ) : (
             <FlatList
               data={goals}
-              keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <GoalItem
-                  goal={{
-                    ...item,
-                    id: item.id.toString(),
-                  }}
+                  goal={item}
                   onToggleComplete={() => toggleGoalComplete(item.id)}
                 />
               )}
+              keyExtractor={item => item.id}
               style={styles.list}
               contentContainerStyle={styles.listContent}
             />
           )}
+
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -116,25 +151,5 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: FrutigerLayout.spacing.sm,
     color: FrutigerColors.text,
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: FrutigerLayout.spacing.md,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: FrutigerLayout.fontSize.md,
-    textAlign: 'center',
-  },
-  noGoalsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  noGoalsText: {
-    fontSize: FrutigerLayout.fontSize.md,
-    color: FrutigerColors.textLight,
   },
 });

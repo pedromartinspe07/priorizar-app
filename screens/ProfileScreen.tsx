@@ -2,10 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
-import { useAuthentication } from '../hooks/useAuthentication';
-// Importe as novas constantes
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
+import { Alert } from 'react-native';
+
+// Mock do hook useAuthentication
+const useAuthentication = () => {
+  const user = { email: 'teste@exemplo.com', name: 'Pedro' };
+  const logout = () => {
+    Alert.alert('Sucesso', 'Logout realizado (mockado)!');
+  };
+  return { user, logout };
+};
 
 export function ProfileScreen() {
   const { user, logout } = useAuthentication();
@@ -14,8 +22,8 @@ export function ProfileScreen() {
     <SafeAreaView style={styles.container}>
       <Header title="Perfil" />
       <View style={styles.profileCard}>
-        <Image 
-          source={require('../assets/images/profile-placeholder.png')} 
+        <Image
+          source={require('../assets/images/profile-placeholder.png')}
           style={styles.avatar}
         />
         <Text style={styles.name}>{user?.name || 'Usuário Priorizar'}</Text>
@@ -59,12 +67,10 @@ const styles = StyleSheet.create({
   email: {
     fontSize: FrutigerLayout.fontSize.md,
     color: FrutigerColors.textLight,
-    marginTop: FrutigerLayout.spacing.sm,
-    textShadowColor: 'rgba(255,255,255,0.5)',
-    textShadowOffset: { width: 0, height: 0.5 },
-    textShadowRadius: 1,
   },
   buttonContainer: {
-    margin: FrutigerLayout.spacing.md,
+    width: '100%',
+    paddingHorizontal: FrutigerLayout.spacing.md,
+    marginTop: FrutigerLayout.spacing.xl,
   },
 });

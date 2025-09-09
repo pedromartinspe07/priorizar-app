@@ -3,11 +3,27 @@ import { View, Text, StyleSheet, TextInput, Alert, SafeAreaView, ActivityIndicat
 import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useAuthentication } from '../hooks/useAuthentication';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
-// Importe as novas constantes
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
+
+// Mock do hook useAuthentication
+const useAuthentication = () => {
+  const login = async (email: string, password: string) => {
+    return new Promise<{ user: { email: string } }>((resolve, reject) => {
+      setTimeout(() => {
+        if (email === 'teste@exemplo.com' && password === '123456') {
+          Alert.alert('Sucesso', 'Login mockado com sucesso!');
+          resolve({ user: { email: 'teste@exemplo.com' } });
+        } else {
+          Alert.alert('Erro', 'Email ou senha incorretos (mockado).');
+          reject('Falha no login');
+        }
+      }, 1500);
+    });
+  };
+  return { login };
+};
 
 type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
 
@@ -28,7 +44,7 @@ export function LoginScreen() {
     try {
       await login(email, password);
     } catch (error) {
-      Alert.alert('Erro', 'Email ou senha incorretos.');
+      // O erro já é tratado no mock do login
     } finally {
       setLoading(false);
     }
@@ -36,32 +52,32 @@ export function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.content}>
-          <Text style={styles.title}>Bem-vindo de Volta</Text>
+          <Text style={styles.title}>Entrar</Text>
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor={FrutigerColors.textLight}
-            value={email}
-            onChangeText={setEmail}
+            placeholderTextColor="#A9A9A9"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
           <TextInput
             style={styles.input}
             placeholder="Senha"
-            placeholderTextColor={FrutigerColors.textLight}
+            placeholderTextColor="#A9A9A9"
+            secureTextEntry
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
           />
-          <Button 
+          <Button
             title={loading ? "" : "Entrar"}
-            onPress={handleLogin} 
+            onPress={handleLogin}
             disabled={loading}
           >
             {loading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
@@ -113,9 +129,8 @@ const styles = StyleSheet.create({
     color: FrutigerColors.text,
   },
   linkText: {
-    marginTop: FrutigerLayout.spacing.md,
     color: FrutigerColors.primary,
+    marginTop: FrutigerLayout.spacing.md,
     fontSize: FrutigerLayout.fontSize.sm,
-    textDecorationLine: 'underline',
   },
 });
