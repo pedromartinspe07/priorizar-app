@@ -4,8 +4,9 @@ import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 type WelcomeScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Welcome'>;
 
@@ -42,36 +43,44 @@ export function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background, // Cor de fundo suave
     justifyContent: 'space-around',
     alignItems: 'center',
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.xl,
   },
   content: {
     alignItems: 'center',
+    paddingHorizontal: FrutigerLayout.spacing.lg,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 180,
+    height: 180,
     resizeMode: 'contain',
-    marginBottom: Layout.spacing.md,
+    marginBottom: FrutigerLayout.spacing.md,
   },
   title: {
-    fontSize: Layout.fontSize.xl,
+    fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: FrutigerColors.text,
+    textShadowColor: 'rgba(255,255,255,0.8)', // Brilho no texto
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: Layout.fontSize.md,
-    color: Colors.textLight,
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.textLight,
     textAlign: 'center',
-    marginTop: Layout.spacing.sm,
-    paddingHorizontal: Layout.spacing.lg,
+    marginTop: FrutigerLayout.spacing.sm,
+    textShadowColor: 'rgba(255,255,255,0.5)', // Brilho no texto
+    textShadowOffset: { width: 0, height: 0.5 },
+    textShadowRadius: 1,
   },
   buttonContainer: {
     width: '100%',
+    paddingHorizontal: FrutigerLayout.spacing.md,
   },
   spacer: {
-    height: Layout.spacing.sm,
+    height: FrutigerLayout.spacing.sm,
   },
 });

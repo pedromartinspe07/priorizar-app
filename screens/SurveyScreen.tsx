@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextInput, Alert, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
-import { Picker } from '@react-native-picker/picker';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
 import api from '../services/api';
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 export function SurveyScreen() {
   const [dailyHours, setDailyHours] = useState('');
@@ -44,7 +44,7 @@ export function SurveyScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Questionário de Monitoramento" />
+      <Header title="Questionário" />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
@@ -57,21 +57,17 @@ export function SurveyScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="Ex: 5"
-                placeholderTextColor={Colors.placeholder}
+                placeholderTextColor="#A9A9A9"
                 value={dailyHours}
                 onChangeText={setDailyHours}
                 keyboardType="numeric"
-              />
-            </View>
-            
-            <View style={styles.questionContainer}>
-              <Text style={styles.question}>2. Quais problemas psicológicos você obteve ao longo do tempo de uso?</Text>
+                />
               <TextInput
                 style={styles.textarea}
                 multiline
                 numberOfLines={4}
                 placeholder="Ex: ansiedade, estresse, irritabilidade..."
-                placeholderTextColor={Colors.placeholder}
+                placeholderTextColor="#A9A9A9"
                 value={psychologicalIssues}
                 onChangeText={setPsychologicalIssues}
               />
@@ -84,7 +80,7 @@ export function SurveyScreen() {
                 multiline
                 numberOfLines={4}
                 placeholder="Ex: discussões, falta de comunicação, afastamento..."
-                placeholderTextColor={Colors.placeholder}
+                placeholderTextColor="#A9A9A9"
                 value={familyIssues}
                 onChangeText={setFamilyIssues}
               />
@@ -96,7 +92,7 @@ export function SurveyScreen() {
           onPress={handleSubmit} 
           disabled={loading}
         >
-          {loading && <ActivityIndicator size="small" color={Colors.cardBackground} />}
+          {loading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
         </Button>
       </ScrollView>
     </SafeAreaView>
@@ -106,47 +102,47 @@ export function SurveyScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
   scrollContent: {
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.md,
   },
   introText: {
-    fontSize: Layout.fontSize.md,
-    color: Colors.textLight,
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.textLight,
     textAlign: 'center',
-    marginBottom: Layout.spacing.md,
+    marginBottom: FrutigerLayout.spacing.lg,
     lineHeight: 24,
   },
   questionContainer: {
-    backgroundColor: Colors.cardBackground,
-    borderRadius: Layout.borderRadius,
-    padding: Layout.spacing.md,
-    marginBottom: Layout.spacing.md,
-    ...Layout.cardShadow,
+    padding: FrutigerLayout.spacing.md,
+    marginBottom: FrutigerLayout.spacing.md,
+    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
   },
   question: {
-    fontSize: Layout.fontSize.md,
+    fontSize: FrutigerLayout.fontSize.md,
     fontWeight: 'bold',
-    marginBottom: Layout.spacing.sm,
-    color: Colors.text,
+    marginBottom: FrutigerLayout.spacing.sm,
+    color: FrutigerColors.text,
   },
   input: {
-    backgroundColor: Colors.background,
-    padding: Layout.spacing.sm,
-    borderRadius: Layout.borderRadius,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    padding: FrutigerLayout.spacing.md,
+    borderRadius: FrutigerLayout.borderRadius,
     borderWidth: 1,
-    borderColor: Colors.border,
-    fontSize: Layout.fontSize.md,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.text,
   },
   textarea: {
-    backgroundColor: Colors.background,
-    padding: Layout.spacing.sm,
-    borderRadius: Layout.borderRadius,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    padding: FrutigerLayout.spacing.md,
+    borderRadius: FrutigerLayout.borderRadius,
     borderWidth: 1,
-    borderColor: Colors.border,
-    fontSize: Layout.fontSize.md,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    fontSize: FrutigerLayout.fontSize.md,
     height: 100,
     textAlignVertical: 'top',
+    color: FrutigerColors.text,
   },
 });

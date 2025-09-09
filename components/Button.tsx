@@ -1,24 +1,27 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, View, ActivityIndicator } from 'react-native';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  loading?: boolean; // Adiciona prop de loading
+  loading?: boolean;
 }
 
 export function Button({ title, loading = false, ...rest }: ButtonProps) {
   return (
     <TouchableOpacity 
-      style={styles.button} 
+      style={[
+        styles.button, 
+        rest.disabled && styles.disabledButton,
+      ]} 
       accessibilityLabel={title} 
       accessibilityHint={`Ativa a ação de ${title}`} 
       disabled={loading || rest.disabled} 
       {...rest}
     >
       {loading ? (
-        <ActivityIndicator size="small" color={Colors.cardBackground} />
+        <ActivityIndicator size="small" color={FrutigerColors.glassBase} />
       ) : (
         <Text style={styles.buttonText}>{title}</Text>
       )}
@@ -28,18 +31,25 @@ export function Button({ title, loading = false, ...rest }: ButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.primary,
-    paddingVertical: Layout.spacing.md,
-    paddingHorizontal: Layout.spacing.lg,
-    borderRadius: Layout.borderRadius,
+    backgroundColor: FrutigerColors.primary,
+    paddingVertical: FrutigerLayout.spacing.md,
+    paddingHorizontal: FrutigerLayout.spacing.lg,
+    borderRadius: FrutigerLayout.borderRadius,
     alignItems: 'center',
     justifyContent: 'center',
-    ...Layout.cardShadow,
+    // Usa a sombra do glassmorphism para um efeito de "flutuação"
+    ...FrutigerLayout.glassmorphism, 
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(0, 122, 204, 0.5)', // Versão mais transparente do primary
   },
   buttonText: {
-    color: Colors.cardBackground,
-    fontSize: Layout.fontSize.md,
-    fontWeight: 'bold', // Pode remover se a fonte Futury-Light já tiver um estilo light/bold próprio
-    fontFamily: 'Futury-Light', // Aplica a fonte
+    color: FrutigerColors.glassBase, // Cor de texto que se destaca no fundo
+    fontSize: FrutigerLayout.fontSize.md,
+    fontWeight: 'bold',
+    // Adiciona uma sombra para dar um efeito de brilho sutil
+    textShadowColor: 'rgba(255, 255, 255, 0.8)', 
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 });

@@ -6,6 +6,7 @@ import { useAuthentication } from './hooks/useAuthentication';
 import { AuthNavigator } from './navigation/AuthNavigator';
 import { AppNavigator } from './navigation/AppNavigator';
 import * as Font from 'expo-font';
+import { FrutigerColors } from './constants/FrutigerColors';
 
 export default function App() {
   const { user, isLoading } = useAuthentication();
@@ -19,7 +20,6 @@ export default function App() {
         });
         setFontLoaded(true);
       } catch (e) {
-        // Você pode logar o erro aqui
         console.warn(e);
       }
     }
@@ -29,7 +29,7 @@ export default function App() {
   if (isLoading || !fontLoaded) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4CAF50" />
+        <ActivityIndicator size="large" color={FrutigerColors.primary} />
         <Text style={styles.loadingText}>Carregando...</Text>
       </View>
     );
@@ -48,11 +48,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: FrutigerColors.background, // Fundo claro e suave
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#555',
+    color: FrutigerColors.text, // Cor de texto principal
+    textShadowColor: 'rgba(255,255,255,0.8)', // Brilho sutil
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 });

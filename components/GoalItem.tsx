@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 interface GoalItemProps {
   goal: {
@@ -21,16 +21,16 @@ export function GoalItem({ goal, onToggleComplete }: GoalItemProps) {
     <TouchableOpacity
       style={styles.item}
       onPress={onToggleComplete}
-      accessibilityRole="checkbox" // Acessibilidade
-      accessibilityState={{ checked: goal.completed }} // Acessibilidade
-      accessibilityLabel={accessibilityLabel} // Acessibilidade
-      accessibilityHint={accessibilityHint} // Acessibilidade
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: goal.completed }}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
     >
       <Text style={[styles.title, goal.completed && styles.completedTitle]}>
         {goal.title}
       </Text>
       <View style={[styles.status, goal.completed && styles.completedStatus]}>
-        {goal.completed && <Ionicons name="checkmark" size={Layout.fontSize.md} color={Colors.cardBackground} />}
+        {goal.completed && <Ionicons name="checkmark" size={FrutigerLayout.fontSize.md} color={FrutigerColors.glassBase} />}
       </View>
     </TouchableOpacity>
   );
@@ -41,33 +41,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: Layout.spacing.md,
-    backgroundColor: Colors.cardBackground,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    padding: FrutigerLayout.spacing.md,
+    marginBottom: FrutigerLayout.spacing.sm,
+    // Aplica o estilo de vidro em cada item
+    ...FrutigerLayout.glassmorphism,
   },
   title: {
-    fontSize: Layout.fontSize.md,
+    fontSize: FrutigerLayout.fontSize.md,
     flex: 1,
-    color: Colors.text,
-    fontFamily: 'Futury-Light', // Aplica a fonte
+    color: FrutigerColors.text,
+    // Adiciona um brilho sutil ao texto
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 0.5 },
+    textShadowRadius: 1,
   },
   completedTitle: {
     textDecorationLine: 'line-through',
-    color: Colors.textLight,
+    color: FrutigerColors.textLight,
   },
   status: {
     width: 24,
     height: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.border,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: Layout.spacing.sm,
+    marginLeft: FrutigerLayout.spacing.sm,
   },
   completedStatus: {
-    backgroundColor: Colors.success,
-    borderColor: Colors.success,
+    backgroundColor: FrutigerColors.secondary,
+    borderColor: FrutigerColors.secondary,
   },
 });

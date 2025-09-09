@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'http://priorizar-backend-production.up.railway.app/api';
+// Corrija a URL base para incluir o '/v1'
+const API_BASE_URL = 'http://priorizar-backend-production.up.railway.app/api/v1';
 
 // Cria uma única instância do Axios para ser usada em todo o app.
 // Isso centraliza a configuração e os interceptors.
@@ -39,7 +40,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       console.log("Token expirado ou inválido. Deslogando...");
       // A lógica de logout real deve ser chamada aqui, por exemplo:
-      // await SecureStore.deleteItemAsync('auth_token');
+      // logout();
     }
     return Promise.reject(error);
   }

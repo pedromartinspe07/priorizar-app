@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
 import { useAuthentication } from '../hooks/useAuthentication';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 export function ProfileScreen() {
   const { user, logout } = useAuthentication();
@@ -12,7 +13,7 @@ export function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Perfil" />
-      <View style={styles.profileContainer}>
+      <View style={styles.profileCard}>
         <Image 
           source={require('../assets/images/profile-placeholder.png')} 
           style={styles.avatar}
@@ -30,33 +31,40 @@ export function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
-  profileContainer: {
+  profileCard: {
     alignItems: 'center',
-    padding: Layout.spacing.lg,
-    backgroundColor: Colors.cardBackground,
-    margin: Layout.spacing.md,
-    borderRadius: Layout.borderRadius,
-    ...Layout.cardShadow,
+    padding: FrutigerLayout.spacing.xl,
+    margin: FrutigerLayout.spacing.md,
+    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
   },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    marginBottom: Layout.spacing.md,
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    marginBottom: FrutigerLayout.spacing.lg,
+    borderWidth: 3,
+    borderColor: FrutigerColors.glassBorder,
+    backgroundColor: 'rgba(255,255,255,0.4)',
   },
   name: {
-    fontSize: Layout.fontSize.lg,
+    fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: FrutigerColors.text,
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   email: {
-    fontSize: Layout.fontSize.md,
-    color: Colors.textLight,
-    marginTop: Layout.spacing.xs,
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.textLight,
+    marginTop: FrutigerLayout.spacing.sm,
+    textShadowColor: 'rgba(255,255,255,0.5)',
+    textShadowOffset: { width: 0, height: 0.5 },
+    textShadowRadius: 1,
   },
   buttonContainer: {
-    margin: Layout.spacing.md,
+    margin: FrutigerLayout.spacing.md,
   },
 });

@@ -5,8 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuthentication } from '../hooks/useAuthentication';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
 
@@ -26,7 +27,6 @@ export function LoginScreen() {
     setLoading(true);
     try {
       await login(email, password);
-      // A navegação é tratada automaticamente pelo App.tsx
     } catch (error) {
       Alert.alert('Erro', 'Email ou senha incorretos.');
     } finally {
@@ -41,11 +41,11 @@ export function LoginScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.content}>
-          <Text style={styles.title}>Entrar</Text>
+          <Text style={styles.title}>Bem-vindo de Volta</Text>
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor={Colors.placeholder}
+            placeholderTextColor={FrutigerColors.textLight}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -54,7 +54,7 @@ export function LoginScreen() {
           <TextInput
             style={styles.input}
             placeholder="Senha"
-            placeholderTextColor={Colors.placeholder}
+            placeholderTextColor={FrutigerColors.textLight}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -64,7 +64,7 @@ export function LoginScreen() {
             onPress={handleLogin} 
             disabled={loading}
           >
-            {loading && <ActivityIndicator size="small" color={Colors.cardBackground} />}
+            {loading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
           </Button>
           <Text style={styles.linkText} onPress={() => navigation.navigate('Register')}>
             Não tem uma conta? Crie uma aqui.
@@ -78,7 +78,7 @@ export function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
   keyboardView: {
     flex: 1,
@@ -89,28 +89,33 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 400,
     alignItems: 'center',
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.xl,
+    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
   },
   title: {
-    fontSize: Layout.fontSize.xl,
+    fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    marginBottom: Layout.spacing.lg,
-    color: Colors.text,
+    marginBottom: FrutigerLayout.spacing.lg,
+    color: FrutigerColors.text,
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   input: {
     width: '100%',
-    backgroundColor: Colors.cardBackground,
-    padding: Layout.spacing.sm,
-    borderRadius: Layout.borderRadius,
-    marginBottom: Layout.spacing.md,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)', // Transparente para o fundo
+    padding: FrutigerLayout.spacing.md,
+    borderRadius: FrutigerLayout.borderRadius,
+    marginBottom: FrutigerLayout.spacing.md,
     borderWidth: 1,
-    borderColor: Colors.border,
-    fontSize: Layout.fontSize.md,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.text,
   },
   linkText: {
-    marginTop: Layout.spacing.md,
-    color: Colors.primary,
-    fontSize: Layout.fontSize.sm,
+    marginTop: FrutigerLayout.spacing.md,
+    color: FrutigerColors.primary,
+    fontSize: FrutigerLayout.fontSize.sm,
     textDecorationLine: 'underline',
   },
 });

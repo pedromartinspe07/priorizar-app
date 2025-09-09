@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } f
 import { Header } from '../components/Header';
 import { PositiveMessageCard } from '../components/PositiveMessageCard';
 import { useAuthentication } from '../hooks/useAuthentication';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
 import api from '../services/api';
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 export function HomeScreen() {
   const { user } = useAuthentication();
@@ -48,7 +49,7 @@ export function HomeScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.greeting}>Olá, {user?.name || 'usuário'} 👋</Text>
         {loadingMessage ? (
-          <ActivityIndicator size="large" color={Colors.primary} style={styles.loadingMessage} />
+          <ActivityIndicator size="large" color={FrutigerColors.primary} style={styles.loadingMessage} />
         ) : (
           <PositiveMessageCard message={positiveMessage} />
         )}
@@ -70,40 +71,41 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background, // Fundo suave e claro
   },
   scrollContent: {
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.md,
   },
   greeting: {
-    fontSize: Layout.fontSize.lg,
+    fontSize: FrutigerLayout.fontSize.lg,
     fontWeight: 'bold',
-    marginVertical: Layout.spacing.sm,
-    color: Colors.text,
+    marginVertical: FrutigerLayout.spacing.sm,
+    color: FrutigerColors.text,
+    textShadowColor: 'rgba(255,255,255,0.8)', // Brilho no texto
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   loadingMessage: {
-    marginTop: Layout.spacing.md,
+    marginTop: FrutigerLayout.spacing.md,
   },
   section: {
-    backgroundColor: Colors.cardBackground,
-    borderRadius: Layout.borderRadius,
-    padding: Layout.spacing.md,
-    marginTop: Layout.spacing.md,
-    ...Layout.cardShadow,
+    padding: FrutigerLayout.spacing.md,
+    marginTop: FrutigerLayout.spacing.md,
+    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
   },
   sectionTitle: {
-    fontSize: Layout.fontSize.md,
+    fontSize: FrutigerLayout.fontSize.md,
     fontWeight: 'bold',
-    color: Colors.text,
-    marginBottom: Layout.spacing.sm,
+    color: FrutigerColors.text,
+    marginBottom: FrutigerLayout.spacing.sm,
   },
   dataText: {
-    fontSize: Layout.fontSize.xl,
+    fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: FrutigerColors.primary,
   },
   subtext: {
-    fontSize: Layout.fontSize.sm,
-    color: Colors.textLight,
+    fontSize: FrutigerLayout.fontSize.sm,
+    color: FrutigerColors.textLight,
   },
 });

@@ -4,8 +4,9 @@ import { Header } from '../components/Header';
 import { GoalItem } from '../components/GoalItem';
 import { Button } from '../components/Button';
 import { useGoals } from '../hooks/useGoals';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 export function GoalsScreen() {
   const [newGoalTitle, setNewGoalTitle] = useState('');
@@ -33,7 +34,7 @@ export function GoalsScreen() {
             <TextInput
               style={styles.input}
               placeholder="Adicionar nova meta..."
-              placeholderTextColor={Colors.placeholder}
+              placeholderTextColor="#A9A9A9"
               value={newGoalTitle}
               onChangeText={setNewGoalTitle}
             />
@@ -41,7 +42,7 @@ export function GoalsScreen() {
           </View>
           {isLoading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={Colors.primary} />
+              <ActivityIndicator size="large" color={FrutigerColors.primary} />
               <Text style={styles.loadingText}>Carregando metas...</Text>
             </View>
           ) : error ? (
@@ -57,7 +58,13 @@ export function GoalsScreen() {
               data={goals}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <GoalItem goal={item} onToggleComplete={() => toggleGoalComplete(item.id)} />
+                <GoalItem
+                  goal={{
+                    ...item,
+                    id: item.id.toString(),
+                  }}
+                  onToggleComplete={() => toggleGoalComplete(item.id)}
+                />
               )}
               style={styles.list}
               contentContainerStyle={styles.listContent}
@@ -72,7 +79,7 @@ export function GoalsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
   keyboardView: {
     flex: 1,
@@ -80,26 +87,26 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Layout.spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
-    backgroundColor: Colors.cardBackground,
+    padding: FrutigerLayout.spacing.md,
+    ...FrutigerLayout.glassmorphism, // Estilo de vidro no container de entrada
+    margin: FrutigerLayout.spacing.md,
   },
   input: {
     flex: 1,
-    backgroundColor: Colors.background,
-    padding: Layout.spacing.sm,
-    borderRadius: Layout.borderRadius,
-    marginRight: Layout.spacing.sm,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    padding: FrutigerLayout.spacing.md,
+    borderRadius: FrutigerLayout.borderRadius,
+    marginRight: FrutigerLayout.spacing.sm,
     borderWidth: 1,
-    borderColor: Colors.border,
-    fontSize: Layout.fontSize.md,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.text,
   },
   list: {
     flex: 1,
   },
   listContent: {
-    paddingBottom: Layout.spacing.md,
+    paddingHorizontal: FrutigerLayout.spacing.md,
   },
   loadingContainer: {
     flex: 1,
@@ -107,18 +114,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingText: {
-    marginTop: Layout.spacing.sm,
-    color: Colors.text,
+    marginTop: FrutigerLayout.spacing.sm,
+    color: FrutigerColors.text,
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.md,
   },
   errorText: {
-    color: Colors.error,
-    fontSize: Layout.fontSize.md,
+    color: 'red',
+    fontSize: FrutigerLayout.fontSize.md,
     textAlign: 'center',
   },
   noGoalsContainer: {
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noGoalsText: {
-    fontSize: Layout.fontSize.md,
-    color: Colors.textLight,
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.textLight,
   },
 });

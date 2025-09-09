@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 interface PositiveMessageCardProps {
   message: string;
@@ -22,26 +23,27 @@ export function PositiveMessageCard({ message }: PositiveMessageCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.cardBackground,
-    borderRadius: Layout.borderRadius,
-    padding: Layout.spacing.md,
-    marginHorizontal: Layout.spacing.md,
-    marginTop: Layout.spacing.md,
-    ...Layout.cardShadow,
+    padding: FrutigerLayout.spacing.md,
+    marginHorizontal: FrutigerLayout.spacing.md,
+    marginTop: FrutigerLayout.spacing.md,
+    // Aplica o estilo de vidro em vez das cores e sombras antigas
+    ...FrutigerLayout.glassmorphism, 
   },
   title: {
-    fontSize: Layout.fontSize.md,
-    fontWeight: 'bold', // Pode remover
-    marginBottom: Layout.spacing.sm,
-    color: Colors.success,
+    fontSize: FrutigerLayout.fontSize.md,
+    fontWeight: 'bold',
+    marginBottom: FrutigerLayout.spacing.sm,
+    color: FrutigerColors.secondary, // Cor de destaque do Frutiger
     textAlign: 'center',
-    fontFamily: 'Futury-Light', // Aplica a fonte
+    // Adiciona uma sombra para um brilho sutil
+    textShadowColor: 'rgba(255, 255, 255, 0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   message: {
-    fontSize: Layout.fontSize.md,
+    fontSize: FrutigerLayout.fontSize.md,
     lineHeight: 24,
-    color: Colors.textLight,
+    color: FrutigerColors.textLight, // Cor para textos secundários
     textAlign: 'center',
-    fontFamily: 'Futury-Light', // Aplica a fonte
   },
 });

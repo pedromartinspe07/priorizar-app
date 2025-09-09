@@ -1,8 +1,8 @@
-import React from 'react';
-import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import * as React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 import { HomeScreen } from '../screens/HomeScreen';
 import { GoalsScreen } from '../screens/GoalsScreen';
@@ -22,8 +22,20 @@ const Tab = createBottomTabNavigator<AppTabParamList>();
 export function AppNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({
+        route,
+      }: {
+        route: { name: keyof AppTabParamList };
+      }) => ({
+        tabBarIcon: ({
+          focused,
+          color,
+          size,
+        }: {
+          focused: boolean;
+          color: string;
+          size: number;
+        }) => {
           let iconName;
           switch (route.name) {
             case 'Home':
@@ -43,17 +55,19 @@ export function AppNavigator() {
           }
           return <Ionicons name={iconName as any} size={size} color={color} />;
         },
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.textLight,
+        tabBarActiveTintColor: FrutigerColors.primary,
+        tabBarInactiveTintColor: FrutigerColors.textLight,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.cardBackground,
-          borderTopColor: Colors.border,
-          height: 60 + Layout.statusBarHeight,
-          paddingBottom: Layout.spacing.sm,
+          backgroundColor: FrutigerColors.glassBase, // Cor de vidro semitransparente
+          borderTopColor: FrutigerColors.glassBorder, // Borda mais clara
+          borderTopWidth: 1,
+          height: 60 + FrutigerLayout.spacing.sm, // Ajuste para o padding
+          paddingBottom: FrutigerLayout.spacing.sm,
+          ...FrutigerLayout.glassmorphism, // Aplica a sombra para o efeito de flutuação
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: FrutigerLayout.fontSize.sm,
         },
       })}
     >

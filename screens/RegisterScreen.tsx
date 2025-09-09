@@ -5,9 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuthentication } from '../hooks/useAuthentication';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
-import { is_valid_email } from '../utils/validations'; // Importa a função de validação
+import { is_valid_email } from '../utils/validations'; // TODO: Verifique se o caminho está correto e se o arquivo existe
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 type RegisterScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Register'>;
 
@@ -27,15 +28,10 @@ export function RegisterScreen() {
       Alert.alert('Erro', 'Por favor, insira um email válido.');
       return;
     }
-    // TODO: Adicionar validação de senha mais robusta se necessário
 
     setLoading(true);
     try {
-      // Aqui você faria a chamada para a API de registro.
-      // Por enquanto, vamos simular e depois fazer o login.
-      // Substitua por sua lógica real de registro
-      // await register(email, password); 
-      // Após o sucesso do registro, faça o login automático
+      // Substitua por sua lógica de registro real
       await login(email, password);
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao tentar criar a conta. Tente novamente.');
@@ -55,7 +51,7 @@ export function RegisterScreen() {
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor={Colors.placeholder}
+            placeholderTextColor="#A9A9A9"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -64,7 +60,7 @@ export function RegisterScreen() {
           <TextInput
             style={styles.input}
             placeholder="Senha"
-            placeholderTextColor={Colors.placeholder}
+            placeholderTextColor="#A9A9A9"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -74,7 +70,7 @@ export function RegisterScreen() {
             onPress={handleRegister} 
             disabled={loading}
           >
-            {loading && <ActivityIndicator size="small" color={Colors.cardBackground} />}
+            {loading && <ActivityIndicator size="small" color={FrutigerColors.glassBase} />}
           </Button>
           <Text style={styles.linkText} onPress={() => navigation.navigate('Login')}>
             Já tem uma conta? Entrar.
@@ -88,7 +84,7 @@ export function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
   keyboardView: {
     flex: 1,
@@ -99,28 +95,33 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 400,
     alignItems: 'center',
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.xl,
+    ...FrutigerLayout.glassmorphism,
   },
   title: {
-    fontSize: Layout.fontSize.xl,
+    fontSize: FrutigerLayout.fontSize.xl,
     fontWeight: 'bold',
-    marginBottom: Layout.spacing.lg,
-    color: Colors.text,
+    marginBottom: FrutigerLayout.spacing.lg,
+    color: FrutigerColors.text,
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   input: {
     width: '100%',
-    backgroundColor: Colors.cardBackground,
-    padding: Layout.spacing.sm,
-    borderRadius: Layout.borderRadius,
-    marginBottom: Layout.spacing.md,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    padding: FrutigerLayout.spacing.md,
+    borderRadius: FrutigerLayout.borderRadius,
+    marginBottom: FrutigerLayout.spacing.md,
     borderWidth: 1,
-    borderColor: Colors.border,
-    fontSize: Layout.fontSize.md,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    fontSize: FrutigerLayout.fontSize.md,
+    color: FrutigerColors.text,
   },
   linkText: {
-    marginTop: Layout.spacing.md,
-    color: Colors.primary,
-    fontSize: Layout.fontSize.sm,
+    marginTop: FrutigerLayout.spacing.md,
+    color: FrutigerColors.primary,
+    fontSize: FrutigerLayout.fontSize.sm,
     textDecorationLine: 'underline',
   },
 });

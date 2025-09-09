@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
-import { Colors } from '../constants/Colors';
-import { Layout } from '../constants/Layout';
+// Importe as novas constantes Frutiger
+import { FrutigerColors } from '../constants/FrutigerColors';
+import { FrutigerLayout } from '../constants/FrutigerLayout';
 
 interface HeaderProps {
   title: string;
@@ -10,7 +11,7 @@ interface HeaderProps {
 export function Header({ title }: HeaderProps) {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header} accessibilityRole="header"> {/* Acessibilidade */}
+      <View style={styles.header} accessibilityRole="header">
         <Text style={styles.title} accessibilityLabel={`Título da página: ${title}`}>
           {title}
         </Text>
@@ -21,19 +22,24 @@ export function Header({ title }: HeaderProps) {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: Colors.background,
+    backgroundColor: FrutigerColors.background,
   },
   header: {
     width: '100%',
-    padding: Layout.spacing.md,
+    padding: FrutigerLayout.spacing.md,
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    // Aplica o estilo de vidro em vez da borda
+    ...FrutigerLayout.glassmorphism,
+    // Adicione um padding para que o header se destaque da tela
+    paddingVertical: FrutigerLayout.spacing.lg,
   },
   title: {
-    fontSize: Layout.fontSize.lg,
-    fontWeight: 'bold', // Pode remover se a fonte Futury-Light já tiver um estilo light/bold próprio
-    color: Colors.text,
-    fontFamily: 'Futury-Light', // Aplica a fonte
+    fontSize: FrutigerLayout.fontSize.lg,
+    fontWeight: 'bold',
+    color: FrutigerColors.text,
+    // Adiciona uma sombra para dar um efeito de brilho sutil
+    textShadowColor: 'rgba(255, 255, 255, 0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 });
