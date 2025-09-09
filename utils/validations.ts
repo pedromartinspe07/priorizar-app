@@ -17,7 +17,6 @@ export const validateEmail = (email: string): boolean => {
  * - Pelo menos uma letra maiúscula.
  * - Pelo menos uma letra minúscula.
  * - Pelo menos um número.
- * - Pelo menos um caractere especial (opcional, mas recomendado para maior segurança).
  * @param password A senha a ser validada.
  * @returns Verdadeiro se a senha for válida, falso caso contrário.
  */

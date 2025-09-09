@@ -3,27 +3,10 @@ import { View, Text, StyleSheet, TextInput, Alert, SafeAreaView, ActivityIndicat
 import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useAuthentication } from '../hooks/useAuthentication';
 import { AuthStackParamList } from '../navigation/AuthNavigator';
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
-
-// Mock do hook useAuthentication
-const useAuthentication = () => {
-  const login = async (email: string, password: string) => {
-    return new Promise<{ user: { email: string } }>((resolve, reject) => {
-      setTimeout(() => {
-        if (email === 'teste@exemplo.com' && password === '123456') {
-          Alert.alert('Sucesso', 'Login mockado com sucesso!');
-          resolve({ user: { email: 'teste@exemplo.com' } });
-        } else {
-          Alert.alert('Erro', 'Email ou senha incorretos (mockado).');
-          reject('Falha no login');
-        }
-      }, 1500);
-    });
-  };
-  return { login };
-};
 
 type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
 
@@ -44,7 +27,7 @@ export function LoginScreen() {
     try {
       await login(email, password);
     } catch (error) {
-      // O erro já é tratado no mock do login
+      Alert.alert('Erro', 'Email ou senha incorretos.');
     } finally {
       setLoading(false);
     }
@@ -106,7 +89,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     alignItems: 'center',
     padding: FrutigerLayout.spacing.xl,
-    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
+    ...FrutigerLayout.glassmorphism,
   },
   title: {
     fontSize: FrutigerLayout.fontSize.xl,
@@ -119,7 +102,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)', // Transparente para o fundo
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
     padding: FrutigerLayout.spacing.md,
     borderRadius: FrutigerLayout.borderRadius,
     marginBottom: FrutigerLayout.spacing.md,

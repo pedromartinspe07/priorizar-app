@@ -31,14 +31,13 @@ export function Button({ title, loading = false, ...rest }: ButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
+    ...FrutigerLayout.glassmorphism,
     backgroundColor: FrutigerColors.primary,
     paddingVertical: FrutigerLayout.spacing.md,
     paddingHorizontal: FrutigerLayout.spacing.lg,
     borderRadius: FrutigerLayout.borderRadius,
     alignItems: 'center',
     justifyContent: 'center',
-    // Usa a sombra do glassmorphism para um efeito de "flutuação"
-    ...FrutigerLayout.glassmorphism, 
   },
   disabledButton: {
     backgroundColor: 'rgba(0, 122, 204, 0.5)', // Versão mais transparente do primary

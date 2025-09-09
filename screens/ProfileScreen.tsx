@@ -2,18 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
+import { useAuthentication } from '../hooks/useAuthentication'; // Importa o hook real
 import { FrutigerColors } from '../constants/FrutigerColors';
 import { FrutigerLayout } from '../constants/FrutigerLayout';
-import { Alert } from 'react-native';
-
-// Mock do hook useAuthentication
-const useAuthentication = () => {
-  const user = { email: 'teste@exemplo.com', name: 'Pedro' };
-  const logout = () => {
-    Alert.alert('Sucesso', 'Logout realizado (mockado)!');
-  };
-  return { user, logout };
-};
 
 export function ProfileScreen() {
   const { user, logout } = useAuthentication();
@@ -45,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: FrutigerLayout.spacing.xl,
     margin: FrutigerLayout.spacing.md,
-    ...FrutigerLayout.glassmorphism, // Aplica o estilo de vidro
+    ...FrutigerLayout.glassmorphism,
   },
   avatar: {
     width: 130,

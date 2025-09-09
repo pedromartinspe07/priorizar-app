@@ -59,12 +59,12 @@ export function AppNavigator() {
         tabBarInactiveTintColor: FrutigerColors.textLight,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: FrutigerColors.glassBase, // Cor de vidro semitransparente
-          borderTopColor: FrutigerColors.glassBorder, // Borda mais clara
+          ...FrutigerLayout.glassmorphism,
+          backgroundColor: FrutigerColors.glassBase, // set after the spread
+          borderTopColor: FrutigerColors.glassBorder,
           borderTopWidth: 1,
-          height: 60 + FrutigerLayout.spacing.sm, // Ajuste para o padding
+          height: 60 + FrutigerLayout.spacing.sm,
           paddingBottom: FrutigerLayout.spacing.sm,
-          ...FrutigerLayout.glassmorphism, // Aplica a sombra para o efeito de flutuação
         },
         tabBarLabelStyle: {
           fontSize: FrutigerLayout.fontSize.sm,
